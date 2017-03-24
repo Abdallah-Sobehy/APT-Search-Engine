@@ -22,6 +22,7 @@ public class Crawler implements Runnable{
 	private int maxPageLimit;
 	// Seed from which other links are extracted
 	private String seed;
+
 	// User Agent to make web crawler conform to robot exclusion standard.
 	private static final String USER_AGENT =
 			"Mozilla/5.0 (Windows NT 6.1; WOW64)"
@@ -48,7 +49,7 @@ public class Crawler implements Runnable{
 		String next = urlsToVisit.remove(0); // checks the first link in the (links to visit) list
 		while(visitedUrls.contains(next)){ // loops until it finds a link that it didn't visit before
 			next = urlsToVisit.remove(0);
-		}
+		}	
 		//visitedUrls.add(next);  // then it marks this link as visited.
 		return next;
 	}
@@ -140,15 +141,18 @@ public class Crawler implements Runnable{
 			int fileNum = 0;
 			//System.out.print(String.format("The page: %s contains %d links\n" ,URL,URLs.size()));
 			for (Element link : URLs){
+
 				if(!link.attr("abs:href").equals("")){ // making sure it is not an empty string
 					urlsToVisit.add(link.attr("abs:href"));
 				}// Add each hyper-link to the links to visit list.
+
 				fileNum++;
 			}
 			return true;
 		}
 		catch(Exception e){
 			System.out.println("Crawl Exception: " + e.toString());
+
 			return false;
 		}
 	}
